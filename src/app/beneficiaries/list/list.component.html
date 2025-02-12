@@ -1,0 +1,32 @@
+<!-- Table for displaying beneficiaries -->
+<p-table *ngIf="(beneficiaries$ | async) as beneficiaries; else loading"
+         [value]="beneficiaries"
+         [paginator]="true"
+         [rows]="5"
+         sortMode="multiple">
+    
+  <!-- Table Header -->
+  <ng-template pTemplate="header">
+    <tr>
+      <th pSortableColumn="name">Name <p-sortIcon field="name"></p-sortIcon></th>
+      <th>Technologies</th>
+      <th>Rating</th>
+    </tr>
+  </ng-template>
+
+  <!-- Table Body -->
+  <ng-template pTemplate="body" let-beneficiary>
+    <tr>
+      <td>{{ beneficiary.name }}</td>
+      <td>{{ beneficiary.technologies.join(', ') }}</td>
+      <td>
+        <p-rating [ngModel]="beneficiary.rating" (onRate)="updateRating(beneficiary, $event.value)"></p-rating>
+      </td>
+    </tr>
+  </ng-template>
+</p-table>
+
+<!-- Loading template -->
+<ng-template #loading>
+  <p>Loading beneficiaries...</p>
+</ng-template>
