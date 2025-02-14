@@ -1,0 +1,22 @@
+<h2>{{ isEditing ? 'Edit Beneficiary' : 'Add New Beneficiary' }}</h2>
+
+<form #beneficiaryForm="ngForm" (ngSubmit)="saveBeneficiary()">
+  <div class="form-group">
+    <label for="name">Name:</label>
+    <input id="name" type="text" [(ngModel)]="beneficiary.name" name="name" required />
+  </div>
+
+  <div class="form-group">
+    <label for="technologies">Technologies:</label>
+    <input id="technologies" type="text" [(ngModel)]="beneficiary.technologies" name="technologies" required />
+  </div>
+
+  <div class="form-group">
+    <label for="rating">Rating:</label>
+    <p-rating [(ngModel)]="beneficiary.rating" name="rating" [cancel]="false"></p-rating>
+  </div>
+
+  <button type="submit" pButton label="{{ isEditing ? 'Save Changes' : 'Add Beneficiary' }}" [disabled]="beneficiaryForm.invalid"></button>
+
+  <p-message *ngIf="successMessage" severity="success" text="Beneficiary {{ isEditing ? 'updated' : 'added' }} successfully!"></p-message>
+</form>

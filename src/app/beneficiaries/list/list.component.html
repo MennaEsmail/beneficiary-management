@@ -1,4 +1,3 @@
-<!-- Table for displaying beneficiaries -->
 <p-table *ngIf="(beneficiaries$ | async) as beneficiaries; else loading"
          [value]="beneficiaries"
          [paginator]="true"
@@ -11,22 +10,30 @@
       <th pSortableColumn="name">Name <p-sortIcon field="name"></p-sortIcon></th>
       <th>Technologies</th>
       <th>Rating</th>
+      <th>Actions</th> <!-- ✅ New column for Edit button -->
     </tr>
   </ng-template>
 
-  <!-- Table Body -->
+  <!-- table -->
   <ng-template pTemplate="body" let-beneficiary>
     <tr>
       <td>{{ beneficiary.name }}</td>
       <td>{{ beneficiary.technologies.join(', ') }}</td>
       <td>
-        <p-rating [ngModel]="beneficiary.rating" (onRate)="updateRating(beneficiary, $event.value)"></p-rating>
+        <p-rating [ngModel]="beneficiary.rating" (onRate)="updateRating(beneficiary, $event.value)" readonly></p-rating>
+      </td>
+      <td>
+        <!-- edit btn -->
+        <button pButton icon="pi pi-pencil" class="p-button-rounded p-button-text"
+                routerLink="/edit-beneficiary/{{ beneficiary.id }}"
+                pTooltip="Edit Beneficiary">
+        </button>
       </td>
     </tr>
   </ng-template>
 </p-table>
 
-<!-- Loading template -->
+<!-- loading -->
 <ng-template #loading>
   <p>Loading beneficiaries...</p>
 </ng-template>

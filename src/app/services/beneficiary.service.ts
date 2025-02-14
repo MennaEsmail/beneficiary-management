@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, map, Observable } from 'rxjs';
 
-interface Beneficiary {
+export interface Beneficiary {
   id: number;
   name: string;
   technologies: string[];
@@ -30,10 +30,21 @@ beneficiaries$ = this.beneficiariesSubject.asObservable();
   getBeneficiaries(): Observable<Beneficiary[]> {
     return this.beneficiaries$;
   }
-
+  // ge a single beneficiary by ID
+  getBeneficiaryById(id: number): Observable<Beneficiary | undefined> {
+    return this.beneficiaries$.pipe(
+      map((beneficiaries) => beneficiaries.find((b) => b.id === id))
+    );
+  }
   // Add a new beneficiary to the list
   addBeneficiary(beneficiary: Beneficiary): void {
     const currentData = this.beneficiariesSubject.value;
     this.beneficiariesSubject.next([...currentData, beneficiary]);
+  }
+  updateBeneficiary(updatedBeneficiary: Beneficiary): void {
+    const currentData = this.beneficiariesSubject.value.map((b) =>
+      b.id === updatedBeneficiary.id ? updatedBeneficiary : b
+    );
+    this.beneficiariesSubject.next(currentData);
   }
 }
