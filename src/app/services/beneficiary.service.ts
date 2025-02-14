@@ -41,10 +41,16 @@ beneficiaries$ = this.beneficiariesSubject.asObservable();
     const currentData = this.beneficiariesSubject.value;
     this.beneficiariesSubject.next([...currentData, beneficiary]);
   }
+  // Update an existing beneficiary in the list
   updateBeneficiary(updatedBeneficiary: Beneficiary): void {
     const currentData = this.beneficiariesSubject.value.map((b) =>
       b.id === updatedBeneficiary.id ? updatedBeneficiary : b
     );
     this.beneficiariesSubject.next(currentData);
+  }
+  // Delete a beneficiary from the list
+  deleteBeneficiary(id: number): void {
+    const updatedList = this.beneficiariesSubject.value.filter(b => b.id !== id);
+    this.beneficiariesSubject.next(updatedList);
   }
 }

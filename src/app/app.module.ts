@@ -14,7 +14,7 @@ import { PanelMenuModule } from 'primeng/panelmenu';
 import { SidebarModule } from 'primeng/sidebar';
 import { ButtonModule } from 'primeng/button';
 import { MessageModule } from 'primeng/message';
-
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
 
 
 // Beneficiary Components
@@ -35,6 +35,7 @@ import { AppRoutingModule } from './app-routing.module';
     PanelMenuModule,
     SidebarModule,
     ButtonModule,
+    ConfirmDialogModule,
     MessageModule,
     RouterModule.forRoot([]), 
     AppRoutingModule
