@@ -24,12 +24,14 @@ import { ChipsModule } from 'primeng/chips';
 // Beneficiary Components
 import { ListComponent } from './beneficiaries/list/list.component';
 import { AddComponent } from './beneficiaries/add/add.component';
+import { ProfileComponent } from './profile/profile.component';
+// Routing Module
 import { AppRoutingModule } from './app-routing.module';
 
 
 
 @NgModule({
-  declarations: [AppComponent,ListComponent,AddComponent],
+  declarations: [AppComponent,ListComponent,AddComponent,ProfileComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,

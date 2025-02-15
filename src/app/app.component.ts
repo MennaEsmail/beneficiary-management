@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from './services/auth.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -11,36 +12,42 @@ export class AppComponent {
   title = 'Beneficiary Management System';
   sidebarVisible = false;
   menuItems: any[] = [];
+  currentUser$: Observable<any> | undefined;
 
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(private authService: AuthService, private router: Router) {
+    this.currentUser$ = this.authService.currentUser$;
+  }
 
   ngOnInit() {
+    this.authService.currentUser$.subscribe(() => { 
+      this.updateMenuItems(); 
+    });
     this.updateMenuItems();
   }
 
   isLoggedIn(): boolean {
+    
     return this.authService.isAuthenticated();
+
   }
 
-  getRole(): 'admin' | 'beneficiary' | null {
-    return this.authService.getRole();
-  }
+
 
   updateMenuItems() {
     const role = this.authService.getRole(); // 'admin' | 'beneficiary' | null
-  
+  console.log(role);
     this.menuItems = [
       {
         label: 'Beneficiaries',
         icon: 'pi pi-users',
         routerLink: '/beneficiaries',
       },
+      {
+        label: 'Add Beneficiary',
+        icon: 'pi pi-plus',
+        routerLink: '/add-beneficiary',
+      },
       ...(role === 'admin' ? [ 
-        {
-          label: 'Add Beneficiary',
-          icon: 'pi pi-plus',
-          routerLink: '/add-beneficiary',
-        },
         {
           label: 'Approve Beneficiaries',
           icon: 'pi pi-check',

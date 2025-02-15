@@ -9,6 +9,7 @@
   <div class="form-group">
     <label for="technologies">Technologies:</label>
     <p-chips [(ngModel)]="beneficiary.technologies" name="technologies" required></p-chips>
+    <span class="hint">Enter to Add</span>
   </div>
 
   <div class="form-group">
@@ -21,7 +22,7 @@
     <input id="age" type="text" [(ngModel)]="beneficiary.age" name="age"  />
   </div>
 
-  <div class="form-group">
+  <div class="form-group d-flex align-items-center gap-1">
     <label for="rating">Rating:</label>
     <p-rating [(ngModel)]="beneficiary.rating" name="rating" [cancel]="false"></p-rating>
   </div>

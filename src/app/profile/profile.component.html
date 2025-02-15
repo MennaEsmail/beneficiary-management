@@ -1,0 +1,14 @@
+<div *ngIf="beneficiary; else notFound">
+    <h2>{{ isSelfProfile ? 'My Profile' : beneficiary?.name + "'s Profile" }}</h2>
+    <p><strong>Technologies:</strong> {{ beneficiary?.technologies?.join(', ') }}</p>
+    <p><strong>Rating:</strong> {{ beneficiary?.rating }}</p>
+    <p><strong>Budget:</strong> {{ beneficiary?.budget || 'N/A' }}</p>
+    <p><strong>Status:</strong> {{ beneficiary?.status }}</p>
+  </div>
+
+  <ng-template #notFound>
+    <p>User not found.</p>
+  </ng-template>
+
+
+  

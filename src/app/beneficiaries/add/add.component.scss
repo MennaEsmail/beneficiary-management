@@ -3,7 +3,7 @@
   }
   
   input {
-    width: 100%;
+    margin: 0 10px;
     padding: 8px;
     border: 1px solid #ccc;
     border-radius: 5px;
@@ -21,4 +21,29 @@
   p-message {
     margin-top: 10px;
   }
+  ::ng-deep{
+    .p-chips {
+      margin:0 10px;
+      height: 33.5px;
+       .p-chips-multiple-container .p-chips-input-token{
+        padding: 0px !important;
+      }
+    }
+  }
+
+  .d-flex{
+    display: flex;
+  }
+   .align-items-center{
+    align-items: center;
+   } 
+   .gap-1{
+    gap: 10px;
+   }
+
+  .hint{
+    font-size: 12px;
+    color: #6c757d;
+  }
+
   

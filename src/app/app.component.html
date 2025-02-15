@@ -6,7 +6,7 @@
 </div>
 
 <!-- Main Content -->
-<div class="content">
+<div [ngClass]="{'content': isLoggedIn()}">
   <p-toast></p-toast>
   <router-outlet></router-outlet>
 </div>

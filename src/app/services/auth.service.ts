@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
-
+import { BeneficiaryService, Beneficiary } from './beneficiary.service';
+import { BehaviorSubject } from 'rxjs';
 export interface User {
+  id: number;
   email: string;
   password: string;
   name: string;
@@ -12,68 +14,120 @@ export interface User {
 })
 export class AuthService {
   private users: User[] = JSON.parse(localStorage.getItem('users') || '[]');
-  private currentUser: User | null = JSON.parse(localStorage.getItem('user') || 'null');
-
-  constructor() {
-    this.initializeAdmin(); // Ensure admin exists
+  private currentUserSubject = new BehaviorSubject<User | null>(this.getCurrentUser());
+  currentUser$ = this.currentUserSubject.asObservable();
+  currentUser: User | null = this.getCurrentUser();
+  constructor(  private beneficiaryService: BeneficiaryService) {
+    this.initializeAdmin(); // Ensure admin user exists
   }
+
 
   private initializeAdmin() {
     const adminExists = this.users.some(u => u.role === 'admin');
     if (!adminExists) {
-      const admin: User = { name: 'Admin', email: 'admin@example.com', password: 'admin123', role: 'admin' };
+      const admin: User = { id: 1, name: 'Admin', email: 'admin@example.com', password: 'admin123', role: 'admin' };
       this.users.push(admin);
-      localStorage.setItem('users', JSON.stringify(this.users));
+      this.saveUsers();
     }
   }
 
-  //Register a Beneficiary Only
+
+  private saveUsers(): void {
+    localStorage.setItem('users', JSON.stringify(this.users));
+  }
+
+
   register(name: string, email: string, password: string): boolean {
     const existingUser = this.users.find(u => u.email === email);
     if (existingUser) {
       return false; 
     }
 
-    const newUser: User = { name, email, password, role: 'beneficiary' };
-    this.users.push(newUser);
-    localStorage.setItem('users', JSON.stringify(this.users));
-    return true; 
-  }
+    // Generate a unique ID
+    const newId = this.users.length > 0 ? Math.max(...this.users.map(u => u.id)) + 1 : 2;
 
-  //Login a user
+    const newUser: User = { id: newId, name, email, password, role: 'beneficiary' };
+    this.users.push(newUser);
+    this.saveUsers();
+    this.addUserAsBeneficiary(newUser);
+
+    //Refresh UI instantly after registration
+    this.refreshUI();
+    
+    return true;
+}
+
+
+  private addUserAsBeneficiary(user: User): void {
+    let beneficiaries: Beneficiary[] = JSON.parse(localStorage.getItem('beneficiaries') || '[]');
+  
+    // Check if they are already a beneficiary
+    if (!beneficiaries.some(b => b.id === user.id)) {
+      const newBeneficiary: Beneficiary = {
+        id: user.id,
+        name: user.name,
+        technologies: [], 
+        rating: 3, 
+        status: 'pending', // New users require admin approval
+        budget: 0, 
+        age: 0 
+      };
+  
+      beneficiaries.push(newBeneficiary);
+      localStorage.setItem('beneficiaries', JSON.stringify(beneficiaries));
+    }
+  }
+ 
   login(email: string, password: string): boolean {
-    const user = this.users.find(u => u.email === email && u.password === password);
+    let users: User[] = JSON.parse(localStorage.getItem('users') || '[]');
+    const user = users.find(u => u.email === email && u.password === password);
+
     if (user) {
-      this.currentUser = user;
-      localStorage.setItem('user', JSON.stringify(user));
-      return true;
+        this.currentUser = user;
+        localStorage.setItem('user', JSON.stringify(user));
+        this.getRole();
+        // Refresh UI instantly after login
+        this.refreshUI();
+        
+        return true;
     }
     return false;
-  }
+}
+private refreshUI() {
+  this.beneficiaryService.loadBeneficiaries();
+  window.dispatchEvent(new Event('storage')); // Forces Angular to update UI
+}
 
-  //Logout user
+
+
   logout(): void {
     this.currentUser = null;
     localStorage.removeItem('user');
   }
 
-  //Check if a user is authenticated
+
   isAuthenticated(): boolean {
     return !!localStorage.getItem('user');
   }
 
-  //Get the role of the current user
+ 
   getRole(): 'admin' | 'beneficiary' | null {
-    return this.currentUser ? this.currentUser.role : null;
+    return this.getCurrentUser()?.role || null;
   }
 
-  //Check if the user is an Admin
+
   isAdmin(): boolean {
     return this.getRole() === 'admin';
   }
 
-  //Check if the user is a Beneficiary
+ 
   isBeneficiary(): boolean {
     return this.getRole() === 'beneficiary';
   }
+
+ 
+  getCurrentUser(): User | null {
+    return JSON.parse(localStorage.getItem('user') || 'null');
+  }
+
 }

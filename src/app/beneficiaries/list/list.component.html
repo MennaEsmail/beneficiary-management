@@ -1,8 +1,10 @@
-<input #searchInput [(ngModel)]="filterText" placeholder="Search by name or budget" />
-<button (click)="clearSearch()">Clear</button>
-
+<div class="mb-2">
+<!-- search   -->
+<input #searchInput class="search-input" [(ngModel)]="filterText" placeholder="Search by name or budget" />
 <!-- Sort Buttons -->
-<button (click)="changeSort('budget')">Sort by Budget</button>
+<button  class="sort-btn" (click)="changeSort('budget')">Sort by Budget</button>
+<button class="clear-btn" (click)="clearSearch()">Reset</button>
+</div>
 
 <p-table *ngIf="(beneficiaries$ | async) as beneficiaries; else loading"
 [value]="beneficiaries | filterPipe:filterText | sortPipe:sortField:sortOrder"
@@ -16,19 +18,21 @@ sortMode="multiple">
       <th pSortableColumn="name">Name <p-sortIcon field="name"></p-sortIcon></th>
       <th>Technologies</th>
       <th pSortableColumn="rating">Rating <p-sortIcon field="rating"></p-sortIcon></th>
-      <th>Actions</th> 
+      <th *ngIf="isAdmin">Actions</th> 
     </tr>
   </ng-template>
 
   <!-- table -->
   <ng-template pTemplate="body" let-beneficiary>
-    <tr>
+    <tr [routerLink]="['/profile', beneficiary.id]" class="cursor-pointer">
       <td>{{ beneficiary.name }}</td>
       <td>{{ beneficiary.technologies.join(', ') }}</td>
       <td>
-        <p-rating [ngModel]="beneficiary.rating" (onRate)="updateRating(beneficiary, $event.value)" readonly></p-rating>
+        <p-rating [ngModel]="beneficiary.rating" (onRate)="updateRating(beneficiary, $event.value)" 
+        [disabled]="beneficiary.name === loggedInUser.name"
+        ></p-rating>
       </td>
-      <td>
+      <td *ngIf="isAdmin">
         <!-- edit btn -->
         <button pButton icon="pi pi-pencil" class="p-button-rounded p-button-text"
                 routerLink="/edit-beneficiary/{{ beneficiary.id }}"

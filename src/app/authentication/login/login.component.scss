@@ -3,8 +3,8 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
-    background: #f4f4f4;
+    height: calc(100vh - 100px);
+    background: #f8f9fa;
   }
   
   /* Box for login/register */

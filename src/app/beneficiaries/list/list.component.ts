@@ -3,7 +3,7 @@ import { BeneficiaryService } from '../../services/beneficiary.service';
 import { Observable, Subject } from 'rxjs';
 import { ConfirmationService } from 'primeng/api';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
-
+import { AuthService } from '../../services/auth.service';
 
 interface Beneficiary {
   id: number;
@@ -27,9 +27,12 @@ export class ListComponent implements OnInit {
   sortOrder: 'asc' | 'desc' = 'asc'; // default order
   searchTerm = new Subject<string>(); // for search
   searchText: string = '';
+  isAdmin: boolean = false;
+  loggedInUser: any;
 constructor(
     private beneficiaryService: BeneficiaryService,
-    private confirmationService: ConfirmationService
+    private confirmationService: ConfirmationService,
+    private authService: AuthService
   ) {}
   @ViewChild('searchInput') searchInput!: ElementRef;
 
@@ -55,6 +58,7 @@ constructor(
 
  updateRating(beneficiary: Beneficiary, newRating: number) {
   beneficiary.rating = newRating;
+  this.beneficiaryService.updateBeneficiaryRating(beneficiary.id, newRating);
 }
   ngOnInit(): void {
     this.beneficiaries$ = this.beneficiaryService.getBeneficiaries();
@@ -65,6 +69,8 @@ constructor(
       ).subscribe(term => {
         this.searchText = term;
       });
+      this.isAdmin = this.authService.getRole() === 'admin';
+      this.loggedInUser = this.authService.getCurrentUser();
   }
 
 

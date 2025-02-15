@@ -1,0 +1,43 @@
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.clear-btn{
+  background: #007bff;
+  color: white;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+
+}
+
+.clear-btn:hover {
+  background: #0056b3;
+}
+
+.sort-btn{
+  background: #007bff;
+  color: white;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  margin: 0 10px;
+}
+
+.sort-btn:hover {
+  background: #0056b3;
+}
+.search-input{
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  height: 40px;
+}
+
+.mb-2{
+  margin-bottom: 20px;
+}
