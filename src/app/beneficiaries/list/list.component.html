@@ -24,8 +24,8 @@ sortMode="multiple">
 
   <!-- table -->
   <ng-template pTemplate="body" let-beneficiary>
-    <tr [routerLink]="['/profile', beneficiary.id]" class="cursor-pointer">
-      <td>{{ beneficiary.name }}</td>
+    <tr  class="cursor-pointer">
+      <td pTooltip="Show Profile" [routerLink]="['/profile', beneficiary.id]">{{ beneficiary.name }}</td>
       <td>{{ beneficiary.technologies.join(', ') }}</td>
       <td>
         <p-rating [ngModel]="beneficiary.rating" (onRate)="updateRating(beneficiary, $event.value)" 

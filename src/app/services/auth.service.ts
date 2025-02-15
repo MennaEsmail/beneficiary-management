@@ -53,7 +53,8 @@ export class AuthService {
 
     //Refresh UI instantly after registration
     this.refreshUI();
-    
+    this.currentUserSubject.next(newUser);
+
     return true;
 }
 
@@ -88,7 +89,7 @@ export class AuthService {
         this.getRole();
         // Refresh UI instantly after login
         this.refreshUI();
-        
+        this.currentUserSubject.next(user);
         return true;
     }
     return false;
@@ -103,6 +104,7 @@ private refreshUI() {
   logout(): void {
     this.currentUser = null;
     localStorage.removeItem('user');
+    this.currentUserSubject.next(null);
   }
 
 
