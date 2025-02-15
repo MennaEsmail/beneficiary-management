@@ -8,7 +8,7 @@
 
   <div class="form-group">
     <label for="technologies">Technologies:</label>
-    <input id="technologies" type="text" [(ngModel)]="beneficiary.technologies" name="technologies" required />
+    <p-chips [(ngModel)]="beneficiary.technologies" name="technologies" required></p-chips>
   </div>
 
   <div class="form-group">
@@ -18,5 +18,5 @@
 
   <button type="submit" pButton label="{{ isEditing ? 'Save Changes' : 'Add Beneficiary' }}" [disabled]="beneficiaryForm.invalid"></button>
 
-  <p-message *ngIf="successMessage" severity="success" text="Beneficiary {{ isEditing ? 'updated' : 'added' }} successfully!"></p-message>
+  <!-- <p-message *ngIf="successMessage" severity="success" text="Beneficiary {{ isEditing ? 'updated' : 'added' }} successfully!"></p-message> -->
 </form>

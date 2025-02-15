@@ -1,0 +1,32 @@
+<div class="auth-wrapper">
+    <div class="auth-box">
+      <h2>{{ isRegisterMode ? 'Register as Beneficiary' : 'Login' }}</h2>
+  
+      <form [formGroup]="authForm" (ngSubmit)="submitForm()">
+        <div *ngIf="isRegisterMode" class="input-group">
+          <label for="name">Name</label>
+          <input id="name" formControlName="name" required />
+        </div>
+  
+        <div class="input-group">
+          <label for="email">Email</label>
+          <input id="email" type="email" formControlName="email" required />
+        </div>
+  
+        <div class="input-group">
+          <label for="password">Password</label>
+          <input id="password" type="password" formControlName="password" required minlength="6" />
+        </div>
+  
+        <p *ngIf="errorMessage" class="error-message">{{ errorMessage }}</p>
+  
+        <button type="submit" class="auth-btn">
+          {{ isRegisterMode ? 'Register' : 'Login' }}
+        </button>
+      </form>
+  
+      <p (click)="toggleMode()" class="toggle-link">
+        {{ isRegisterMode ? 'Already have an account? Login' : 'Don’t have an account? Register' }}
+      </p>
+    </div>
+  </div>

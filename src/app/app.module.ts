@@ -15,8 +15,9 @@ import { SidebarModule } from 'primeng/sidebar';
 import { ButtonModule } from 'primeng/button';
 import { MessageModule } from 'primeng/message';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
-
-
+import { ToastModule } from 'primeng/toast';
+import { MessageService } from 'primeng/api';
+import { ChipsModule } from 'primeng/chips';
 // Beneficiary Components
 import { ListComponent } from './beneficiaries/list/list.component';
 import { AddComponent } from './beneficiaries/add/add.component';
@@ -37,9 +38,12 @@ import { AppRoutingModule } from './app-routing.module';
     ButtonModule,
     ConfirmDialogModule,
     MessageModule,
+    ToastModule,
+    ChipsModule,
     RouterModule.forRoot([]), 
     AppRoutingModule
   ],
+  providers: [MessageService],
   bootstrap: [AppComponent],
 })
 export class AppModule { }

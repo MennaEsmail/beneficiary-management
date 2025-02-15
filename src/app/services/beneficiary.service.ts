@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, map, Observable } from 'rxjs';
-
+import { MessageService } from 'primeng/api';
 export interface Beneficiary {
   id: number;
   name: string;
@@ -15,7 +15,7 @@ export class BeneficiaryService {
   private beneficiariesSubject = new BehaviorSubject<Beneficiary[]>([]);
 beneficiaries$ = this.beneficiariesSubject.asObservable();
 
-  constructor() {
+  constructor(private messageService: MessageService) {
     // Initialize with mock data
     const initialBeneficiaries: Beneficiary[] = [
       { id: 1, name: 'Menna Esmail', technologies: ['Angular', 'RxJS'], rating: 4 },
@@ -40,17 +40,33 @@ beneficiaries$ = this.beneficiariesSubject.asObservable();
   addBeneficiary(beneficiary: Beneficiary): void {
     const currentData = this.beneficiariesSubject.value;
     this.beneficiariesSubject.next([...currentData, beneficiary]);
+    this.messageService.add({
+      severity: 'success',
+      summary: 'Added',
+      detail: `Beneficiary ${beneficiary.name} added successfully`,
+    });
   }
+
   // Update an existing beneficiary in the list
   updateBeneficiary(updatedBeneficiary: Beneficiary): void {
     const currentData = this.beneficiariesSubject.value.map((b) =>
       b.id === updatedBeneficiary.id ? updatedBeneficiary : b
     );
     this.beneficiariesSubject.next(currentData);
+    this.messageService.add({
+      severity: 'success',
+      summary: 'Updated',
+      detail: `Beneficiary ${updatedBeneficiary.name} updated successfully`,
+    });
   }
   // Delete a beneficiary from the list
   deleteBeneficiary(id: number): void {
     const updatedList = this.beneficiariesSubject.value.filter(b => b.id !== id);
     this.beneficiariesSubject.next(updatedList);
+    this.messageService.add({
+      severity: 'success',
+      summary: 'Deleted',
+      detail: `Beneficiary deleted successfully`,
+    });
   }
 }

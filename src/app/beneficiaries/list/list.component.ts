@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { BeneficiaryService } from '../../services/beneficiary.service';
 import { Observable } from 'rxjs';
-import { ConfirmationService, MessageService } from 'primeng/api';
+import { ConfirmationService } from 'primeng/api';
 interface Beneficiary {
   id: number;
   name: string;
@@ -14,15 +14,14 @@ interface Beneficiary {
   selector: 'app-list',
   templateUrl: './list.component.html',
   styleUrl: './list.component.scss',
-  providers: [ConfirmationService, MessageService],
+  providers: [ConfirmationService],
 })
 export class ListComponent implements OnInit {
   beneficiaries$!: Observable<Beneficiary[]>; //I added ! to tell the compiler that this variable it will be assigned before being used
                                               //$I added to clearly indicate that the variable is an Observable stream.
 constructor(
     private beneficiaryService: BeneficiaryService,
-    private confirmationService: ConfirmationService,
-    private messageService: MessageService
+    private confirmationService: ConfirmationService
   ) {}
 
   confirmDelete(beneficiary: Beneficiary) {
@@ -32,7 +31,6 @@ constructor(
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
         this.beneficiaryService.deleteBeneficiary(beneficiary.id);
-        this.messageService.add({ severity: 'success', summary: 'Deleted', detail: 'Beneficiary deleted successfully' });
       },
     });
   }

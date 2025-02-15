@@ -1,10 +1,12 @@
-<!-- side bar  -->
-<p-sidebar [(visible)]="sidebarVisible" [baseZIndex]="10000">
-    <p-panelMenu [model]="menuItems"></p-panelMenu>
+<div *ngIf="isLoggedIn()">
+  <p-sidebar [(visible)]="sidebarVisible" [baseZIndex]="10000">
+    <p-panelMenu [model]="menuItems"></p-panelMenu> 
   </p-sidebar>
-  <p-button (onClick)="sidebarVisible = !sidebarVisible " icon="pi pi-arrow-right" />
-  
-  <!-- Main Content -->
-  <div class="content">
-    <router-outlet></router-outlet>
-  </div>
+  <p-button (click)="sidebarVisible = !sidebarVisible" icon="pi pi-bars" />
+</div>
+
+<!-- Main Content -->
+<div class="content">
+  <p-toast></p-toast>
+  <router-outlet></router-outlet>
+</div>

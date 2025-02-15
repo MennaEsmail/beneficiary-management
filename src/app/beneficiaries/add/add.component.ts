@@ -7,9 +7,9 @@ import { ActivatedRoute, Router } from '@angular/router';
   styleUrl: './add.component.scss'
 })
 export class AddComponent {
-  beneficiary: Beneficiary = { id: 0, name: '', technologies: [], rating: 3 };
+  beneficiary: Beneficiary = { id: 0, name: '', technologies: [], rating: 0 };
   isEditing = false;
-  successMessage = false;
+
 
   constructor(
     private beneficiaryService: BeneficiaryService,
@@ -18,28 +18,24 @@ export class AddComponent {
   ) {}
 
   ngOnInit() {
-    const id = Number(this.route.snapshot.paramMap.get('id')); // Get ID from URL
+    const id = Number(this.route.snapshot.paramMap.get('id')); // Get ID from URL to check if we are editing
     if (id) {
       this.isEditing = true;
       this.beneficiaryService.getBeneficiaryById(id).subscribe((beneficiary) => {
         if (beneficiary) {
-          this.beneficiary = { ...beneficiary }; // Fill form with existing data
+          this.beneficiary = { ...beneficiary }; // copy the object to avoid changing the original object
         }
       });
     }
   }
 
   saveBeneficiary() {
+    console.log(this.beneficiary);
     if (this.isEditing) {
       this.beneficiaryService.updateBeneficiary(this.beneficiary);
     } else {
       this.beneficiaryService.addBeneficiary(this.beneficiary);
     }
-
-    this.successMessage = true;
-    setTimeout(() => {
-      this.successMessage = false;
-      this.router.navigate(['/beneficiaries']);
-    }, 2000);
+    this.router.navigate(['/beneficiaries']);
   }
 }
