@@ -1,28 +1,51 @@
+# Beneficiary Management System
 
-# BeneficiaryManagement
+## 📌 Project Overview
+The **Beneficiary Management System** is an Angular 17-based application that provides:
+- **User Authentication & Role-Based Access**
+- **Beneficiary Registration & Approval (Admin Only)**
+- **Search, Filter, and Sorting Features**
+- **Beneficiary Rating System**
+- **Profile Page for Beneficiaries**
+- **Real-time UI Updates Using RxJS**
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.3.11.
+---
 
-## Development server
+## 🚀 **Getting Started**
+### **1️⃣ Prerequisites**
+Ensure you have the following installed:
+- **Node.js v20+**
+- **Angular CLI** (`npm install -g @angular/cli`)
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+### **2️⃣ Clone the Repository**
+```sh
+git clone https://github.com/your-repository-url.git
+cd beneficiary-management
 
-## Code scaffolding
+3️⃣ Install Dependencies
+npm install
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+4️⃣ Run the Project
+ng serve
 
-## Build
+📌 Technologies Used
+Angular 17 - Component-based frontend framework
+RxJS - Reactive programming for state management
+PrimeNG - UI components for Angular
+TypeScript - Strongly typed JavaScript
+Angular Routing - Client-side navigation
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+🔀 Why We Used RxJS Instead of NgRx
+✅ Pros of RxJS
+Lightweight: No need for extra store management setup.
+Simplicity: Direct state management using BehaviorSubject without the boilerplate of NgRx.
+Real-time UI updates using Observables.
+Better Performance compared to NgRx in smaller applications.
+❌ Cons of RxJS
+No centralized state management: Data consistency needs to be handled manually.
+No DevTools Integration: Unlike NgRx, debugging is less structured.
+Potential Memory Leaks: Requires manual subscription cleanup.
+When to Use NgRx?
+For large-scale applications where centralized state management is needed.
+If state needs to persist across multiple components.
+When time-travel debugging is required.
