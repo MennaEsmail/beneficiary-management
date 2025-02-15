@@ -7,7 +7,7 @@ import { ActivatedRoute, Router } from '@angular/router';
   styleUrl: './add.component.scss'
 })
 export class AddComponent {
-  beneficiary: Beneficiary = { id: 0, name: '', technologies: [], rating: 0 };
+  beneficiary: Beneficiary = { id: 0, name: '', technologies: [], rating: 0, status: 'pending' };
   isEditing = false;
 
 

@@ -40,7 +40,12 @@ export class AppComponent {
           label: 'Add Beneficiary',
           icon: 'pi pi-plus',
           routerLink: '/add-beneficiary',
-        }
+        },
+        {
+          label: 'Approve Beneficiaries',
+          icon: 'pi pi-check',
+          routerLink: '/approve-beneficiaries',
+        },
       ] : []),
       {
         label: 'Settings',

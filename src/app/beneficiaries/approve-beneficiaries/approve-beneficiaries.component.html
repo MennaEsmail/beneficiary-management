@@ -1,0 +1,27 @@
+<div class="approve-container">
+    <h2>Pending Beneficiaries</h2>
+  
+    <p #confirmMessage class="confirmation"></p> 
+  
+    <table *ngIf="pendingBeneficiaries.length > 0">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Budget</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let beneficiary of pendingBeneficiaries">
+          <td>{{ beneficiary.name }}</td>
+          <td>{{ beneficiary.budget | currency }}</td>
+          <td>
+            <button (click)="approveBeneficiary(beneficiary.id)">Approve</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  
+    <p *ngIf="pendingBeneficiaries.length === 0">No pending beneficiaries.</p>
+  </div>
+  

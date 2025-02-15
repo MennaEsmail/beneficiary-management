@@ -1,15 +1,21 @@
+<input #searchInput [(ngModel)]="filterText" placeholder="Search by name or budget" />
+<button (click)="clearSearch()">Clear</button>
+
+<!-- Sort Buttons -->
+<button (click)="changeSort('budget')">Sort by Budget</button>
+
 <p-table *ngIf="(beneficiaries$ | async) as beneficiaries; else loading"
-         [value]="beneficiaries"
-         [paginator]="true"
-         [rows]="5"
-         sortMode="multiple">
+[value]="beneficiaries | filterPipe:filterText | sortPipe:sortField:sortOrder"
+[paginator]="true"
+[rows]="5"
+sortMode="multiple">
     
   <!-- Table Header -->
   <ng-template pTemplate="header">
     <tr>
       <th pSortableColumn="name">Name <p-sortIcon field="name"></p-sortIcon></th>
       <th>Technologies</th>
-      <th>Rating</th>
+      <th pSortableColumn="rating">Rating <p-sortIcon field="rating"></p-sortIcon></th>
       <th>Actions</th> 
     </tr>
   </ng-template>

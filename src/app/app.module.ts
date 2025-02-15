@@ -6,6 +6,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppComponent } from './app.component';
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+//pips
+import { FilterPipe } from './pipes/filter.pipe';
+import { SortPipe } from './pipes/sort.pipe';
 
 // PrimeNG Modules
 import { TableModule } from 'primeng/table';
@@ -22,6 +25,7 @@ import { ChipsModule } from 'primeng/chips';
 import { ListComponent } from './beneficiaries/list/list.component';
 import { AddComponent } from './beneficiaries/add/add.component';
 import { AppRoutingModule } from './app-routing.module';
+
 
 
 @NgModule({
@@ -41,7 +45,9 @@ import { AppRoutingModule } from './app-routing.module';
     ToastModule,
     ChipsModule,
     RouterModule.forRoot([]), 
-    AppRoutingModule
+    AppRoutingModule,
+    FilterPipe,
+    SortPipe,
   ],
   providers: [MessageService],
   bootstrap: [AppComponent],

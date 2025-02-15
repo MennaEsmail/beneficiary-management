@@ -4,10 +4,12 @@ import { authGuard } from './guards/auth.guard';
 import { ListComponent } from './beneficiaries/list/list.component';
 import { AddComponent } from './beneficiaries/add/add.component';
 import {LoginComponent} from './authentication/login/login.component';
+import {ApproveBeneficiariesComponent} from './beneficiaries/approve-beneficiaries/approve-beneficiaries.component';
 const routes: Routes = [
   { path: 'beneficiaries', component: ListComponent, canActivate: [authGuard] }, 
   { path: 'add-beneficiary', component: AddComponent, canActivate: [authGuard], data: { role: 'admin' } },
   { path: 'edit-beneficiary/:id', component: AddComponent, canActivate: [authGuard], data: { role: 'admin' } },
+  { path: 'approve-beneficiaries', component: ApproveBeneficiariesComponent, canActivate: [authGuard],data: { role: 'admin' } },
   { path: 'login', component: LoginComponent },
   { path: '**', redirectTo: 'login' }
 
