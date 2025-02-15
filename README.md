@@ -49,3 +49,11 @@ When to Use NgRx?
 For large-scale applications where centralized state management is needed.
 If state needs to persist across multiple components.
 When time-travel debugging is required.
+
+
+http://localhost:4200
+🔑 Admin Login Credentials
+To log in as an Admin, use the following credentials:
+
+Username: admin@example.com
+Password: admin123
